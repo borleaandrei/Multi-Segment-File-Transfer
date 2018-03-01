@@ -10,9 +10,9 @@ Comanda : {raspuns1, ..., raspunsN}
 	- N - marimea in bytes a fisierului
 - <b>numar_canale_disponibile</b> : N
 	- N - numarul de canale de transfer ramase a putea fi deschise (N >= 0), (?? fiecare server putand avea la un momentdat cel mult <100?> conexiuni de transfer deschise ??).
-- <b>descarca nume_fis nr_seg marime_seg1 adr_inceput_seg1 ... marime_segN adr_inceput_segN</b> : {-1, nr_porturi nr_port1 sha256_seg1 ... nr_portN sha256_segN}
+- <b>descarca nume_fis nr_seg marime_seg1 adr_inceput_seg1 ... marime_segN adr_inceput_segN</b> : {-1, sha256_seg1 ... sha256_segN}
 	- -1 - eroare: exista constrangerea numar_segmente <= numar_canale_disponibile. Se va returna o eroare daca nu este respectata aceasta constrangere - fie ca clientul nu a tinut cont de constrangerea anterioara, fie au fost alocate canale altui client intre timp.
-	- nr_porturi nr_port1 sha256_seg1 ... nr_portN sha256_segN- numarul porturilor, numarul fiecarui port deschis pentru fiecare segment si checksum pentru fiecare segment, in ordinea ceruta(port1 - segment1 sha256_seg1 ... portN - segmentN sha256_segN) 
+	- sha256_seg1 ... sha256_segN- checksum pentru fiecare segment, in ordinea ceruta(segment1 -sha256_seg1 ... - segmentN - sha256_segN)
 		- se deschid numar_segment canale de comunicatie cu serverul, urmand ca pe fiecare astfel de canal sa se transfere un segment specificat.
 		- clientul va salva fiecare segment intr-un fisier diferit, iar cand vor fi descarcate toate segmentele (de pe oricate servere), va uni toate aceste fisiere intr-unul. 
 		- serverul va deschide nume_fisier de numar_segment ori in read-only mode, transmitand fiecare astfel de segment pe port ul specificat anterior
