@@ -15,13 +15,23 @@
 #include <netinet/in.h>
 #include <fcntl.h>
 #include <pthread.h>
-#include <ftw.h>
 
+#include "file_utilities.h"
 #include "netio.h"
 
-#define SERVER_ROOT "/home/server_PAD"
-#define SERVER_PORT 5680
+// Create in the folder where the executable is produced a TEST_SERVER directory, and fill it with some test data
+#define SERVER_PORT 5693
 #define BUFSIZE 1024
+
+#define MAX_SIZE_LENGTH 20
+
+// Server commands
+enum
+{
+    FILE_EXISTS,
+    DOWNLOAD_FILE,
+    SHA256_FILE,
+};
 
 #define TRUE  1
 #define FALSE 0
