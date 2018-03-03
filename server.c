@@ -3,9 +3,13 @@
 //
 
 #include "server.h"
+#define DIR_PATH "/home/borlea/Desktop/PAD/Multi-Segment-File-Transfer/server_dir"
+// change path appropriately for your machine
 
 pthread_mutex_t mutex;
 int threadNumber = 0;
+char *file_name;
+int file_size=0;
 
 int readline_init(int sfd)
 {
@@ -47,19 +51,64 @@ int readline(int connfd, char *line, int *idx, char *buf, int maxlen)
 }
 
 
+static int search_file(const char *fpath, const struct stat *sb,
+             int tflag, struct FTW *ftwbuf){
+
+    char *x;
+    int i=0;
+
+    x=&fpath[strlen(fpath)-1];
+    while(*x!='/')
+        x--;
+    x++;
+    for(i=0;i<strlen(x)&&x[i]==file_name[i];i++);
+
+    if(i==strlen(x)){
+        file_size=sb->st_size;
+        return 1;
+    }
+    return 0;
+
+}
+
+
 void * server_function(void *arg)
 {
-    int ret;
+    int ret, n,i=0;
     char line[BUFSIZE];
     char buf[BUFSIZE];
-    int idx = 0;
+    int idx = 0, flags = 0;
     int *connfd = (int *)arg;
+    char *cmd;
+    char f_size[10];
 
     while(1)
     {
         /*Read the request issued by the client*/
         while(0 < (ret = readline(*connfd, line, &idx, buf, BUFSIZE)))
         {
+            cmd=line;
+            n=strspn(cmd," \t\r\n");
+            if(strlen(cmd) == n)
+                continue;
+            
+            cmd+=n;
+            n=strcspn(cmd," \t\r\n");
+            if(strncmp(cmd,"exista",n) == 0) {
+                cmd+=n+1;
+                file_name = (char *)malloc(strlen(cmd)+1);
+                strcpy(file_name, cmd);
+                file_size = -1;
+
+                if(nftw(DIR_PATH,search_file,20,flags) == 1){
+                    printf("File found, size = %d   \n",file_size);
+                }
+
+                for(i=0;i<10;i++) f_size[i]=0;
+                snprintf(f_size,10,"%d",file_size);
+                stream_write(*connfd,f_size, 10);
+                continue;
+            }
 
         }
     }
@@ -78,10 +127,12 @@ int main(void)
     socklen_t rlen;
     pthread_t thread;
     pthread_attr_t attr;
-
+    
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, 1);
     pthread_mutex_init(&mutex, NULL);
+
+    
 
     if(-1 == (sockfd = socket(PF_INET, SOCK_STREAM, 0)))
     {

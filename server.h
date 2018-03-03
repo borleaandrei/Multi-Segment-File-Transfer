@@ -6,7 +6,7 @@
 #define MULTI_SEGMENT_FILE_TRANSFER_SERVER_H
 
 #include <stdio.h>
-#include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -15,6 +15,7 @@
 #include <netinet/in.h>
 #include <fcntl.h>
 #include <pthread.h>
+#include <ftw.h>
 
 #include "netio.h"
 

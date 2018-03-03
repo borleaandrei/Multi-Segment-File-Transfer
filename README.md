@@ -6,7 +6,7 @@ Structura unei comenzi: <b>/nume_comanda param1 param2 ...</b><br>
 
 Comanda : {raspuns1, ..., raspunsN}
 - <b>exista nume_fisier</b> : {0, N}
-	- 0 in caz ca fisierul nu exista pe server
+	- -1 in caz ca fisierul nu exista pe server
 	- N - marimea in bytes a fisierului
 - <b>numar_canale_disponibile</b> : N
 	- N - numarul de canale de transfer ramase a putea fi deschise (N >= 0), (?? fiecare server putand avea la un momentdat cel mult <100?> conexiuni de transfer deschise ??).
