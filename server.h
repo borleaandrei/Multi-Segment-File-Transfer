@@ -20,7 +20,7 @@
 #include "netio.h"
 
 // Create in the folder where the executable is produced a TEST_SERVER directory, and fill it with some test data
-#define SERVER_PORT 5693
+#define SERVER_PORT 5721
 #define BUFSIZE 1024
 
 #define MAX_SIZE_LENGTH 20

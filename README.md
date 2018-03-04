@@ -18,7 +18,7 @@ Comanda : {raspuns1, ..., raspunsN}
 		- serverul va deschide nume_fisier de numar_segment ori in read-only mode, transmitand fiecare astfel de segment pe port ul specificat anterior
 		- va putea fi verificata integritatea fiecarui segment preluat, daca aceasta nu corespunde se va reincerca transferul de x ori
 		- este datoria clientului de a initia transfer pentru fiecare segment
-- <b>sha256_seg marime_seg adr_inceput_seg : {-1, sha256 segment}
+- <b>sha256_seg marime_seg adr_inceput_seg</b> : {-1, sha256 segment}
     - -1 - eroare
     - sha256 segment : valoarea hashului segmentului specificat
 - <b>sha256 nume_fisier</b> : sh256sum_nume_fisier

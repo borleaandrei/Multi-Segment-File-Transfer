@@ -46,7 +46,7 @@ int readline(int connfd, char *line, int *idx, char *buf, int maxlen) {
 /*Takes as input filename, for whom path will be completed with its absolute path (in regard to DIR_PATH)
  * and return the size of the filename
  * path may be NULL is filename path is not of interest*/
-int does_file_exist(char *filename, char *path) {
+int does_file_exist(char *filename, char **path) {
     // Open index file in readonly mode - no protection needed
     index_file = fopen(INDEX_FILE_NAME, "r");
 
@@ -55,11 +55,11 @@ int does_file_exist(char *filename, char *path) {
 
     // TODO: improve search time (how index file is organized etc.)
     while (fscanf(index_file, "%s %s %d", file_name, file_name_path, &file_name_size) == 3) {
-        printf("%s %s %d\n", file_name, filename, file_name_size);
         if (strcmp(file_name, filename) == 0) {
             // Return the path only if the user requiers it
             if (path != NULL) {
-                path = (char *) malloc(sizeof(char) * strlen(file_name_path));
+                *path = (char *) malloc(sizeof(char) * strlen(file_name_path) + 1);
+                strcpy(*path, file_name_path);
             }
             fclose(index_file);
             return file_name_size;
@@ -84,8 +84,11 @@ void *server_function(void *arg) {
     while (1) {
         /*Read the request issued by the client*/
         while (0 < (ret = readline(*connfd, line, &idx, buf, BUFSIZE))) {
+            printf("Received: %s\n", line);
+            // Needed to use the reentrant version of strtok
+            char *command_r = line;
             // Split the given commands by spaces in order to identify the command and individual parameters
-            command = strtok(line, (const char *) " \r\n\t");
+            command = strtok_r(line, (const char *) " \r\n\t", &command_r);
 
             // Empty command
             if (strlen(command) == 0)
@@ -94,13 +97,15 @@ void *server_function(void *arg) {
             // exista nume_fisier
             if (strcmp(command, "exista") == 0) {
                 // Get the filename parameter
-                command = strtok(NULL, (const char *) " \r\n\t");
+                command = strtok_r(NULL, (const char *) " \r\n\t", &command_r);
 
                 // Transform file_size to string into the f_size char array
                 memset((void *) f_size, '\0', MAX_SIZE_LENGTH);
                 int size = does_file_exist(command, NULL);
-                printf("%d %s\n", size, command);
                 snprintf(f_size, MAX_SIZE_LENGTH, "%d", size);
+
+                printf("Response: %s\n", f_size);
+
                 stream_write(*connfd, f_size, sizeof(char) * strlen(f_size));
 
                 continue;
@@ -109,8 +114,57 @@ void *server_function(void *arg) {
             // descarca nume_fis nr_seg marime_seg adr_inceput
             if (strcmp(command, "descarca") == 0) {
                 // Get the filename
-                char *filename = strtok(NULL, (const char *) " \r\n\t");
+                char *filename = strtok_r(NULL, (const char *) " \r\n\t", &command_r);
+                // Get segment size
+                char *size_s = strtok_r(NULL, (const char *) " \r\n\t", &command_r);
+                int size = atoi(size_s);
+                // Get start adress of the segment
+                char *addr_s = strtok_r(NULL, (const char *) " \r\n\t", &command_r);
+                int addr = atoi(addr_s);
 
+                // TODO add response to client in case of failure
+                char *path[1];
+                *path = (char *) malloc(
+                        sizeof(char));// No harm done, just so does_file_exist function will not detect this as NULL
+                FILE *to_transfer;
+                if (does_file_exist(filename, path) == -1) {
+                    perror("Download request failed!");
+                    free(*path);
+                    continue;
+                }
+
+                if ((to_transfer = fopen(*path, "rb")) == NULL) {
+                    perror("Download request failed!");
+                    free(*path);
+                    continue;
+                }
+
+                printf("Download request: filename = %s segment_size = %d start_addr = %d path = %s\n", filename, size,
+                       addr, *path);
+
+                if (fseek(to_transfer, addr, SEEK_SET) != 0) {
+                    perror("Download request failed!");
+                    free(path);
+                    continue;
+                }
+
+                // Write in batches of BUFSIZE in order not to fill RAM in case a very large segment was requested
+                char buff[1024] = {'\0'};
+                while(size >= BUFSIZE)
+                {
+                    fread(buff, sizeof(char), BUFSIZE, to_transfer);
+                    // TODO check that everything has transfered
+                    stream_write(*connfd, buff, BUFSIZE);
+                    size -= BUFSIZE;
+                }
+                // TODO check ^^
+                // Transfer the left chunk
+                fread(buff, sizeof(char), size, to_transfer);
+                stream_write(*connfd, buff, size);
+
+                fclose(to_transfer);
+
+                free(*path);
             }
         }
     }
