@@ -106,7 +106,7 @@ void *server_function(void *arg) {
 
                 printf("Response: %s\n", f_size);
 
-                stream_write(*connfd, f_size, sizeof(char) * strlen(f_size));
+                stream_write(*connfd, f_size, sizeof(char) * MAX_SIZE_LENGTH);
 
                 continue;
             }
@@ -150,17 +150,19 @@ void *server_function(void *arg) {
 
                 // Write in batches of BUFSIZE in order not to fill RAM in case a very large segment was requested
                 char buff[1024] = {'\0'};
+                printf("send %d %d\n",size, BUFSIZE);
                 while(size >= BUFSIZE)
                 {
                     fread(buff, sizeof(char), BUFSIZE, to_transfer);
                     // TODO check that everything has transfered
                     stream_write(*connfd, buff, BUFSIZE);
                     size -= BUFSIZE;
+                    
                 }
-                // TODO check ^^
-                // Transfer the left chunk
+                printf("end stream_write\n");
+
                 fread(buff, sizeof(char), size, to_transfer);
-                stream_write(*connfd, buff, size);
+                stream_write(*connfd, buff, BUFSIZE);
 
                 fclose(to_transfer);
 
@@ -175,13 +177,18 @@ void *server_function(void *arg) {
     return NULL;
 }
 
-int main(void) {
+int main(int argc, char *argv[]) {
     /*Start a server and listen at SERVER_PORT*/
     int sockfd, *connfd;
     struct sockaddr_in local_addr, remote_addr;
     socklen_t rlen;
     pthread_t thread;
     pthread_attr_t attr;
+
+    if(argc < 2){
+        printf("You have to give as argument the server port!\n");
+        exit(1);
+    }
 
     create_index_file();
 
@@ -198,7 +205,7 @@ int main(void) {
         perror("Initialization of readline failed!");
         exit(EXIT_FAILURE);
     }
-    set_addr(&local_addr, NULL, INADDR_ANY, SERVER_PORT);
+    set_addr(&local_addr, NULL, INADDR_ANY, (short)atoi(argv[1]));
 
     if (-1 == bind(sockfd, (struct sockaddr *) &local_addr, sizeof(local_addr))) {
         perror("Error at bind()!");
