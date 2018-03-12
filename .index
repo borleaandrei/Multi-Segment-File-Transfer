@@ -1,0 +1,4 @@
+filee ./TEST_SERVER/filee 7622
+file ./TEST_SERVER/file 67
+file2 ./TEST_SERVER/DIR2/file2 10
+file21 ./TEST_SERVER/DIR2/DIR21/file21 5552

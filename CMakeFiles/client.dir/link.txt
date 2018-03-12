@@ -1,0 +1,1 @@
+/usr/bin/cc   -pthread CMakeFiles/client.dir/client.c.o CMakeFiles/client.dir/netio.c.o CMakeFiles/client.dir/file_utilities.c.o  -o client 

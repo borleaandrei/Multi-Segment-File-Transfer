@@ -1,0 +1,1 @@
+/usr/bin/cc   -pthread CMakeFiles/server.dir/server.c.o CMakeFiles/server.dir/netio.c.o CMakeFiles/server.dir/file_utilities.c.o  -o server 
