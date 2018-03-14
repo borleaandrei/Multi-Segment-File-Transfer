@@ -209,6 +209,13 @@ int main(int argc, char *argv[]){
         }
 
         fclose(g);        
+
+        if (remove(seg_fname) != 0)
+        {
+            perror("Unable to delete the file");
+            exit(10);
+        }
+
     } 
 
     fclose(f);
