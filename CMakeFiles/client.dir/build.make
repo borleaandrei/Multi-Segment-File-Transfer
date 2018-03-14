@@ -43,10 +43,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/marc/Desktop/dir/Multi-Segment-File-Transfer
+CMAKE_SOURCE_DIR = /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/marc/Desktop/dir/Multi-Segment-File-Transfer
+CMAKE_BINARY_DIR = /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer
 
 # Include any dependencies generated for this target.
 include CMakeFiles/client.dir/depend.make
@@ -59,42 +59,42 @@ include CMakeFiles/client.dir/flags.make
 
 CMakeFiles/client.dir/client.c.o: CMakeFiles/client.dir/flags.make
 CMakeFiles/client.dir/client.c.o: client.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/client.dir/client.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/client.dir/client.c.o   -c /home/marc/Desktop/dir/Multi-Segment-File-Transfer/client.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/client.dir/client.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/client.dir/client.c.o   -c /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/client.c
 
 CMakeFiles/client.dir/client.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/client.dir/client.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/marc/Desktop/dir/Multi-Segment-File-Transfer/client.c > CMakeFiles/client.dir/client.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/client.c > CMakeFiles/client.dir/client.c.i
 
 CMakeFiles/client.dir/client.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/client.dir/client.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/marc/Desktop/dir/Multi-Segment-File-Transfer/client.c -o CMakeFiles/client.dir/client.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/client.c -o CMakeFiles/client.dir/client.c.s
 
 CMakeFiles/client.dir/netio.c.o: CMakeFiles/client.dir/flags.make
 CMakeFiles/client.dir/netio.c.o: netio.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/client.dir/netio.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/client.dir/netio.c.o   -c /home/marc/Desktop/dir/Multi-Segment-File-Transfer/netio.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/client.dir/netio.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/client.dir/netio.c.o   -c /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/netio.c
 
 CMakeFiles/client.dir/netio.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/client.dir/netio.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/marc/Desktop/dir/Multi-Segment-File-Transfer/netio.c > CMakeFiles/client.dir/netio.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/netio.c > CMakeFiles/client.dir/netio.c.i
 
 CMakeFiles/client.dir/netio.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/client.dir/netio.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/marc/Desktop/dir/Multi-Segment-File-Transfer/netio.c -o CMakeFiles/client.dir/netio.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/netio.c -o CMakeFiles/client.dir/netio.c.s
 
 CMakeFiles/client.dir/file_utilities.c.o: CMakeFiles/client.dir/flags.make
 CMakeFiles/client.dir/file_utilities.c.o: file_utilities.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/client.dir/file_utilities.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/client.dir/file_utilities.c.o   -c /home/marc/Desktop/dir/Multi-Segment-File-Transfer/file_utilities.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/client.dir/file_utilities.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/client.dir/file_utilities.c.o   -c /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/file_utilities.c
 
 CMakeFiles/client.dir/file_utilities.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/client.dir/file_utilities.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/marc/Desktop/dir/Multi-Segment-File-Transfer/file_utilities.c > CMakeFiles/client.dir/file_utilities.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/file_utilities.c > CMakeFiles/client.dir/file_utilities.c.i
 
 CMakeFiles/client.dir/file_utilities.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/client.dir/file_utilities.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/marc/Desktop/dir/Multi-Segment-File-Transfer/file_utilities.c -o CMakeFiles/client.dir/file_utilities.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/file_utilities.c -o CMakeFiles/client.dir/file_utilities.c.s
 
 # Object files for target client
 client_OBJECTS = \
@@ -110,7 +110,7 @@ client: CMakeFiles/client.dir/netio.c.o
 client: CMakeFiles/client.dir/file_utilities.c.o
 client: CMakeFiles/client.dir/build.make
 client: CMakeFiles/client.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable client"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/client.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -123,6 +123,6 @@ CMakeFiles/client.dir/clean:
 .PHONY : CMakeFiles/client.dir/clean
 
 CMakeFiles/client.dir/depend:
-	cd /home/marc/Desktop/dir/Multi-Segment-File-Transfer && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/marc/Desktop/dir/Multi-Segment-File-Transfer /home/marc/Desktop/dir/Multi-Segment-File-Transfer /home/marc/Desktop/dir/Multi-Segment-File-Transfer /home/marc/Desktop/dir/Multi-Segment-File-Transfer /home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles/client.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles/client.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/client.dir/depend
 

@@ -3,13 +3,13 @@
 
 #define SERVER_NUMBER 5
 pthread_mutex_t mutex;
-int segment_size;
 char filename[100],host[] = "localhost";
 
 typedef struct download_info {
     int port;
     int address;
     int segment_size;
+    int seg_id;
 } download_info;
 
 
@@ -21,8 +21,7 @@ void* threadfunc( void* sgmt )
     struct sockaddr_in local_addr, remote_addr;
     FILE *f;
 
-    seg_id = info->address/info->segment_size + 1;
-	snprintf(seg_fname, 255, "file_%d", seg_id);
+	snprintf(seg_fname, 255, "file_%d", info->seg_id);
     if((f = fopen(seg_fname,"wb")) == 0){
         perror("file error!");
         exit(7);
@@ -52,6 +51,8 @@ void* threadfunc( void* sgmt )
     stream_write(sockfd, command, strlen(command)); 
 
     int size = info->segment_size;
+
+    printf("seg_id:%s address:%d segment_size:%d\n", seg_fname, info->address, info->segment_size);
     while(size >= BUFSIZE && (nr = stream_read(sockfd, buff, BUFSIZE)) > 0){
         fwrite(buff, sizeof(char), nr, f);
         i++;
@@ -76,9 +77,10 @@ int main(int argc, char *argv[]){
     pthread_t threads[SERVER_NUMBER * MAX_CHANNELS];
     download_info info[SERVER_NUMBER * MAX_CHANNELS];
     pthread_mutex_init(&mutex, NULL);
+    FILE *f, *g;
 
     //<client> nume_fisier nr_segmente port1..portn
-    if(argc<3){
+    if(argc<4){
         perror("<client>: nume_fisier nr_segmente port1 ... portn\n");
         exit(1);
     }
@@ -119,6 +121,7 @@ int main(int argc, char *argv[]){
 
     }
 
+    int file_remainder = file_size % segment_number;
     int segment_size = file_size / segment_number;
     int segment_per_server = segment_number / number_of_ports;
     int segment_for_last_server = segment_per_server + segment_number % number_of_ports;
@@ -128,15 +131,16 @@ int main(int argc, char *argv[]){
     printf("segment size:%d\n",segment_size);
     printf("segment_per_server:%d\n",segment_per_server);
     printf("segment_for_last_server:%d\n",segment_for_last_server);
+    printf("file_remainder:%d\n",file_remainder);
 
     for(i = 0; i < number_of_ports - 1; i++){
-
         for(j = 0; j < segment_per_server; j++ ) {
 
             pthread_mutex_lock(&mutex);
             info[thread_number].port = ports[i];
             info[thread_number].segment_size = segment_size;
             info[thread_number].address = segment_start_address;
+            info[thread_number].seg_id = segment_start_address/segment_size + 1;
             if ( pthread_create( &threads[thread_number++], NULL, threadfunc, (void*) &info[thread_number]) != 0 ) {
 	            perror("Couldn't create a new thread!");
 	            exit(EXIT_FAILURE);
@@ -150,8 +154,11 @@ int main(int argc, char *argv[]){
     for(j = 0; j < segment_for_last_server; j++ ) {
         pthread_mutex_lock(&mutex);
         info[thread_number].port = ports[number_of_ports-1];
-        info[thread_number].segment_size = segment_size;
         info[thread_number].address = segment_start_address;
+        info[thread_number].segment_size = segment_size;
+        info[thread_number].seg_id = segment_start_address/segment_size + 1;
+        if(j == segment_for_last_server - 1)//put remainder in last segment
+            info[thread_number].segment_size += file_remainder;
         if ( pthread_create( &threads[thread_number++], NULL, threadfunc, (void*) &info[thread_number]) != 0 ) {
 	        perror("Couldn't create a new thread!");
 	        exit(EXIT_FAILURE);
@@ -165,10 +172,46 @@ int main(int argc, char *argv[]){
     }
 
 
+    //formarea fisierului descarcat
 
-    //TODO formarea fisierului descarcat
+    if((f = fopen(filename,"ab")) == NULL){
+        perror("file error 8!");
+        exit(8);
+    }
 
+    char seg_fname[256];
+    char buff[BUFSIZE];
+    int nr, size;
+    for(j = 0; j < thread_number; j++) {
 
+        snprintf(seg_fname, 255, "file_%d", j+1);
+
+        if((g = fopen(seg_fname,"rb")) == 0){
+            perror("file error 9!");
+            exit(9);
+        }
+
+        size = segment_size;
+
+        if(j == thread_number - 1)
+            size += file_remainder; // add remainder for last segment case
+
+        while(size >= BUFSIZE ){
+            fread(buff, sizeof(char), BUFSIZE, g);
+            //check
+            fwrite(buff, sizeof(char), BUFSIZE, f);
+            size = size - BUFSIZE;
+        }
+
+        if(size > 0){
+            nr = fread(buff, sizeof(char), size, g);
+            fwrite(buff,sizeof(char), nr, f);
+        }
+
+        fclose(g);        
+    } 
+
+    fclose(f);
 
 
     return 0;

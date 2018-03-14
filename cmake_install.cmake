@@ -1,4 +1,4 @@
-# Install script for directory: /home/marc/Desktop/dir/Multi-Segment-File-Transfer
+# Install script for directory: /home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/marc/Desktop/dir/Multi-Segment-File-Transfer/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

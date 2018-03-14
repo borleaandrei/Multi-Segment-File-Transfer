@@ -1,4 +1,4 @@
-/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles/rebuild_cache.dir
-/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles/edit_cache.dir
-/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles/client.dir
-/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles/server.dir
+/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles/rebuild_cache.dir
+/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles/edit_cache.dir
+/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles/client.dir
+/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles/server.dir

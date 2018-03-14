@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/marc/Desktop/dir/Multi-Segment-File-Transfer/file_utilities.c" "/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles/server.dir/file_utilities.c.o"
-  "/home/marc/Desktop/dir/Multi-Segment-File-Transfer/netio.c" "/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles/server.dir/netio.c.o"
-  "/home/marc/Desktop/dir/Multi-Segment-File-Transfer/server.c" "/home/marc/Desktop/dir/Multi-Segment-File-Transfer/CMakeFiles/server.dir/server.c.o"
+  "/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/file_utilities.c" "/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles/server.dir/file_utilities.c.o"
+  "/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/netio.c" "/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles/server.dir/netio.c.o"
+  "/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/server.c" "/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/CMakeFiles/server.dir/server.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
