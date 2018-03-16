@@ -80,19 +80,20 @@ int main(int argc, char *argv[]){
     strcpy(filename,argv[1]);
     segment_number = atoi(argv[2]);
 
-    if((sockfd = socket(PF_INET, SOCK_STREAM,0))==-1){
-        perror("socket error!");
-        exit(2);
-    }
-
-    set_addr(&local_addr, NULL, INADDR_ANY, 0);
-    if(bind(sockfd, (struct sockaddr *)&local_addr, sizeof(local_addr))==-1)
-    {
-        perror("bind error!");
-        exit(3);
-    }
 
     for(i = 3; i < argc; i++){
+        if((sockfd = socket(PF_INET, SOCK_STREAM,0))==-1){
+            perror("socket error!");
+            exit(2);
+        }
+        
+        set_addr(&local_addr, NULL, INADDR_ANY, 0);
+        if(bind(sockfd, (struct sockaddr *)&local_addr, sizeof(local_addr))==-1)
+        {
+            perror("bind error!");
+            exit(3);
+        }
+        
         //memorez serverele care contin fisierul
         if(set_addr(&remote_addr, host, 0, atoi(argv[i]))){
             perror("set adress errror!");
