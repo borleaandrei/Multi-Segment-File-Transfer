@@ -1,21 +1,11 @@
-
 #include "server.h"
+#include "client.h"
 
-#define SERVER_NUMBER 5
-pthread_mutex_t mutex;
 char filename[100],host[] = "localhost";
-
-typedef struct download_info {
-    int port;
-    int address;
-    int segment_size;
-    int seg_id;
-} download_info;
-
 
 void* threadfunc( void* sgmt ) {
     
-    int seg_id,sockfd, i, nr;
+    int seg_id,sockfd, i, nr, size;
     download_info *info = (download_info *)sgmt;
     char seg_fname[256],command[100], buff[BUFSIZE];
     struct sockaddr_in local_addr, remote_addr;
@@ -42,17 +32,18 @@ void* threadfunc( void* sgmt ) {
         perror("set adress errror!");
         exit(4);
     }
-    printf("vreau %d de la adresa %d\n",info->segment_size, info->address);
-
+    
     if(connect(sockfd,(struct sockaddr*)&remote_addr, sizeof(remote_addr))){
-        perror("connection error!321");
+        perror("connection error!");
         exit(5);
     }
     snprintf(command, 100, "descarca %s %d %d\n", filename, info->segment_size, info->address);
     stream_write(sockfd, command, strlen(command)); 
-
-    int size = info->segment_size;
-
+    
+    printf("%s",command);
+    
+    size = info->segment_size;
+    
     printf("seg_id:%s address:%d segment_size:%d\n", seg_fname, info->address, info->segment_size);
     while(size >= BUFSIZE && (nr = stream_read(sockfd, buff, BUFSIZE)) > 0){
         fwrite(buff, sizeof(char), nr, f);

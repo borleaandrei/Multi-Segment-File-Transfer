@@ -9,6 +9,10 @@
 /Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/client.c
 server.h
 /Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/server.h
+client.h
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/client.h
+
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/client.h
 
 /Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/file_utilities.c
 file_utilities.h
