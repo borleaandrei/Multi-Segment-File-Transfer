@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/file_utilities.c
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/file_utilities.c
 file_utilities.h
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/file_utilities.h
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/file_utilities.h
 
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/file_utilities.h
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/file_utilities.h
 stdio.h
 -
 memory.h
@@ -18,11 +18,11 @@ memory.h
 ftw.h
 -
 
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/netio.c
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/netio.c
 netio.h
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/netio.h
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/netio.h
 
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/netio.h
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/netio.h
 sys/types.h
 -
 sys/socket.h
@@ -38,11 +38,11 @@ netdb.h
 stdio.h
 -
 
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/server.c
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/server.c
 server.h
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/server.h
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/server.h
 
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/server.h
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/server.h
 stdio.h
 -
 string.h
@@ -64,7 +64,7 @@ fcntl.h
 pthread.h
 -
 file_utilities.h
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/file_utilities.h
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/file_utilities.h
 netio.h
-/home/andrei/PAD/Proiect1/Multi-Segment-File-Transfer/netio.h
+/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/netio.h
 

@@ -13,8 +13,8 @@ typedef struct download_info {
 } download_info;
 
 
-void* threadfunc( void* sgmt )
-{
+void* threadfunc( void* sgmt ) {
+    
     int seg_id,sockfd, i, nr;
     download_info *info = (download_info *)sgmt;
     char seg_fname[256],command[100], buff[BUFSIZE];
@@ -42,12 +42,13 @@ void* threadfunc( void* sgmt )
         perror("set adress errror!");
         exit(4);
     }
+    printf("vreau %d de la adresa %d\n",info->segment_size, info->address);
+
     if(connect(sockfd,(struct sockaddr*)&remote_addr, sizeof(remote_addr))){
-        perror("connection error!");
+        perror("connection error!321");
         exit(5);
     }
-
-    snprintf(command, 100, "descarca %s %d %d\n", filename, info->segment_size, info->address); 
+    snprintf(command, 100, "descarca %s %d %d\n", filename, info->segment_size, info->address);
     stream_write(sockfd, command, strlen(command)); 
 
     int size = info->segment_size;
@@ -114,6 +115,7 @@ int main(int argc, char *argv[]){
         snprintf(command, 100, "exista %s\n", filename);
         stream_write(sockfd,command,strlen(command));
         stream_read(sockfd, f_size, sizeof(char )*MAX_SIZE_LENGTH);
+        
         if(atoi(f_size) > 0){     
             file_size = atoi(f_size);
             ports[number_of_ports++] = atoi(argv[i]); 
@@ -127,7 +129,8 @@ int main(int argc, char *argv[]){
     int segment_for_last_server = segment_per_server + segment_number % number_of_ports;
     int segment_start_address = 0;
     int thread_number = 0;
-
+    
+    printf("number of servers:%d\n",number_of_ports);
     printf("segment size:%d\n",segment_size);
     printf("segment_per_server:%d\n",segment_per_server);
     printf("segment_for_last_server:%d\n",segment_for_last_server);
@@ -141,16 +144,16 @@ int main(int argc, char *argv[]){
             info[thread_number].segment_size = segment_size;
             info[thread_number].address = segment_start_address;
             info[thread_number].seg_id = segment_start_address/segment_size + 1;
-            if ( pthread_create( &threads[thread_number++], NULL, threadfunc, (void*) &info[thread_number]) != 0 ) {
+            if ( pthread_create( &threads[thread_number], NULL, threadfunc, (void*) &info[thread_number]) != 0 ) {
 	            perror("Couldn't create a new thread!");
 	            exit(EXIT_FAILURE);
 	        }
+            thread_number++;
             segment_start_address += segment_size;
             pthread_mutex_unlock(&mutex);
 
         }
     }
-
     for(j = 0; j < segment_for_last_server; j++ ) {
         pthread_mutex_lock(&mutex);
         info[thread_number].port = ports[number_of_ports-1];
@@ -159,10 +162,11 @@ int main(int argc, char *argv[]){
         info[thread_number].seg_id = segment_start_address/segment_size + 1;
         if(j == segment_for_last_server - 1)//put remainder in last segment
             info[thread_number].segment_size += file_remainder;
-        if ( pthread_create( &threads[thread_number++], NULL, threadfunc, (void*) &info[thread_number]) != 0 ) {
+        if ( pthread_create( &threads[thread_number], NULL, threadfunc, (void*) &info[thread_number]) != 0 ) {
 	        perror("Couldn't create a new thread!");
 	        exit(EXIT_FAILURE);
 	    }
+        thread_number++;
         segment_start_address += segment_size;
         pthread_mutex_unlock(&mutex);
     }
