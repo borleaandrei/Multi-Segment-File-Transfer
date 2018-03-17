@@ -1,4 +1,0 @@
-/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/CMakeFiles/rebuild_cache.dir
-/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/CMakeFiles/edit_cache.dir
-/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/CMakeFiles/client.dir
-/Users/marcmadalin/Desktop/soc/Multi-Segment-File-Transfer/CMakeFiles/server.dir
