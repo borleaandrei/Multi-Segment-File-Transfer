@@ -9,6 +9,7 @@ void *threadfunc(void *sgmt) {
     char seg_fname[256], command[100], buff[BUFSIZE];
     struct sockaddr_in local_addr, remote_addr;
     FILE *f;
+    int verif=0;
 
     snprintf(seg_fname, 255, "file_%d", info->seg_id);
     if ((f = fopen(seg_fname, "wb")) == 0) {
@@ -16,10 +17,12 @@ void *threadfunc(void *sgmt) {
         exit(7);
     }
 
-    snprintf(command, 100, "descarca %s %d %d\n", filename, info->segment_size, info->address);
-    stream_write(info->socketfd, command, (int) strlen(command));
 
-    printf("%s", command);
+    snprintf(command, 100, "descarca %s %d %d\n", filename, info->segment_size, info->address);
+    
+    verif=stream_write(info->socketfd, command, (int) strlen(command));
+
+
 
     size = info->segment_size;
 
@@ -91,7 +94,7 @@ int main(int argc, char *argv[]) {
 
     int segment_size = file_size / segment_number;
     int file_remainder = file_size % segment_number;
-    int segment_per_server = segment_number / number_of_ports;
+    int segment_per_server = segment_number / (number_of_ports-1);
 
     int segment_start_address = 0;
     int thread_number = 0;
@@ -104,13 +107,35 @@ int main(int argc, char *argv[]) {
     int seg_id = 0;
     // -1 because the last port is treated separately
     for (i = 0; i < number_of_ports - 1; i++) {
-        segment_number -= segment_number / number_of_ports;
+        //segment_number -= segment_number / number_of_ports;
+        segment_number -= segment_per_server;
 
         for (j = 0; j < segment_per_server; j++) {
+
+            if ((sockfd = socket(PF_INET, SOCK_STREAM, 0)) == -1) {
+                perror("[Client] socket error!");
+                exit(2);
+            }
+
+            set_addr(&local_addr, NULL, INADDR_ANY, 0);
+            if (bind(sockfd, (struct sockaddr *) &local_addr, sizeof(local_addr)) == -1) {
+                perror("[Client] bind error!");
+                exit(3);
+            }
+
+            //memorez serverele care contin fisierul
+            if (set_addr(&remote_addr, host, 0, (short int) atoi(argv[i+3]))) {
+                perror("[Client] set adress errror!");
+                exit(4);
+            }
+            if (connect(sockfd, (struct sockaddr *) &remote_addr, sizeof(remote_addr))) {
+                perror("[Client] connection error!");
+                exit(5);
+            }        
             file_size -= segment_size;
 
             pthread_mutex_lock(&mutex);
-            info[thread_number].socketfd = sockets[i];
+            info[thread_number].socketfd = sockfd;
             info[thread_number].segment_size = segment_size;
             info[thread_number].address = segment_start_address;
             info[thread_number].seg_id = ++seg_id;
@@ -123,13 +148,37 @@ int main(int argc, char *argv[]) {
             pthread_mutex_unlock(&mutex);
         }
     }
-    // Consider the remaining segments - take them from last server
-    for(j = 0; j < segment_number; ++j) {
-        file_size = file_size < segment_size ? file_size : file_size - segment_size;
+    //Consider the remaining segments - take them from last server
+    if(file_remainder > 0 )
+        segment_number ++;
 
+    for(j = 0; j < segment_number; ++j) {
+
+        if ((sockfd = socket(PF_INET, SOCK_STREAM, 0)) == -1) {
+            perror("[Client] socket error!*");
+            exit(2);
+        }
+
+        set_addr(&local_addr, NULL, INADDR_ANY, 0);
+        if (bind(sockfd, (struct sockaddr *) &local_addr, sizeof(local_addr)) == -1) {
+            perror("[Client] bind error!*");
+            exit(3);
+        }
+
+        //memorez serverele care contin fisierul
+        if (set_addr(&remote_addr, host, 0, (short int) atoi(argv[argc-1]))) {
+            perror("[Client] set adress errror!*");
+            exit(4);
+        }
+        if (connect(sockfd, (struct sockaddr *) &remote_addr, sizeof(remote_addr))) {
+            perror("[Client] connection error!*");
+            exit(5);
+        }
+        
         pthread_mutex_lock(&mutex);
-        info[thread_number].socketfd = sockets[i];
-        info[thread_number].segment_size = segment_size;
+        info[thread_number].socketfd = sockfd;
+        //info[thread_number].segment_size = segment_size;
+        info[thread_number].segment_size = file_size < segment_size ? file_size : segment_size;
         info[thread_number].address = segment_start_address;
         info[thread_number].seg_id = ++seg_id;
         if (pthread_create(&threads[thread_number], NULL, threadfunc, (void *) &info[thread_number]) != 0) {
@@ -139,7 +188,11 @@ int main(int argc, char *argv[]) {
         thread_number++;
         segment_start_address += segment_size;
         pthread_mutex_unlock(&mutex);
+
+        file_size = file_size < segment_size ? file_size : file_size - segment_size;
+
     }
+
 
     for (j = 0; j < thread_number; j++) {
         pthread_join(threads[j], NULL);
@@ -148,7 +201,7 @@ int main(int argc, char *argv[]) {
 
     //formarea fisierului descarcat
 
-    if ((f = fopen(filename, "ab")) == NULL) {
+    if ((f = fopen(filename, "wb")) == NULL) {
         perror("file error 8!");
         exit(8);
     }
