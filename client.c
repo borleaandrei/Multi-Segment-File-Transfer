@@ -84,10 +84,15 @@ int main(int argc, char *argv[]) {
         stream_write(sockfd, command, (int) strlen(command));
         stream_read(sockfd, f_size, sizeof(char) * MAX_SIZE_LENGTH);
 
+        // Keep connection on only with servers that have the file
         if (atoi(f_size) > 0) {
             file_size = atoi(f_size);
             // Connection established, remember socket file descriptor for future use
             sockets[number_of_ports++] = sockfd;
+        }
+            // Close connection for servers that do not have the file
+        else {
+            shutdown(sockfd, SHUT_WR);
         }
 
     }
