@@ -97,6 +97,11 @@ int main(int argc, char *argv[]) {
 
     }
 
+    if(number_of_ports == 0) {
+        printf("[Client] No server has the requested file!\n");
+        return 1;
+    }
+
     int segment_size = file_size / segment_number;
     int file_remainder = file_size % segment_number;
     int segment_per_server = segment_number / (number_of_ports-1);
